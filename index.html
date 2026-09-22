@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>배설 100제</title>
+<title>배설 134제</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -147,9 +147,11 @@ const CATS = [
 {id:'structure', name:'배설계의 구조', icon:'🫨'},
 {id:'urine', name:'오줌의 생성과 이동', icon:'🔄'},
 {id:'system', name:'기관계의 통합 작용', icon:'🫁'},
+{id:'oxreason', name:'OX 함정문장 찾기', icon:'🎯'},
 ];
 
 function M(c,q,o,a,e,img){return {c,t:'mcq',q,o,a,e,img:img||null};}
+function OX(c,q,isTrue,reasons,ra,e){return {c,t:'ox2',q,isTrue,reasons:reasons||[],ra:(ra===undefined?null:ra),e};}
 
 const QUESTIONS = [
 M("waste","세포에서 영양소를 분해하여 에너지를 얻을 때 만들어지는 물질을 무엇이라 하는가?",["노폐물","영양소","호르몬","효소"],0,"세포에서 에너지를 얻기 위해 영양소를 분해할 때 노폐물이 만들어져요."),
@@ -252,6 +254,102 @@ M("system","섭취한 음식물 중 소화·흡수되지 않은 물질이 몸 �
 M("system","세포호흡에 필요한 영양소와 산소를 각각 공급하는 기관계를 옳게 짝지은 것은?",["영양소 - 호흡계, 산소 - 소화계","영양소 - 소화계, 산소 - 호흡계","영양소 - 배설계, 산소 - 순환계","영양소 - 순환계, 산소 - 배설계"],1,"영양소는 소화계가, 산소는 호흡계가 공급해요."),
 M("system","세포호흡 결과 생긴 이산화 탄소와 노폐물을 조직 세포로부터 운반해 오는 기관계는?",["소화계","호흡계","순환계","배설계"],2,"순환계는 조직 세포에서 생긴 이산화 탄소와 노폐물을 운반해 와요."),
 M("system","다음 중 세포호흡과 기관계의 통합 작용에 대한 설명으로 옳지 않은 것은?",["세포호흡은 조직 세포의 미토콘드리아에서 일어난다","세포호흡에는 소화계, 순환계, 호흡계, 배설계가 함께 관여한다","세포호흡으로 생긴 노폐물은 배설계를 통해 나간다","세포호흡은 배설계에서 직접 일어난다"],3,"세포호흡은 조직 세포(미토콘드리아)에서 일어나며, 배설계는 그 결과 생긴 노폐물을 걸러 내보내는 역할을 해요."),
+
+/* ============ OX 함정문장 찾기 ============ */
+OX("oxreason","단백질이 세포에서 분해되면 이산화 탄소와 물만 생성되고 암모니아는 생성되지 않는다.",false,
+  ["단백질은 질소를 포함하고 있어 분해되면 이산화 탄소, 물과 함께 암모니아도 생성되기 때문","암모니아는 탄수화물이 분해될 때만 생성되기 때문","암모니아는 콩팥에서 세포호흡으로 직접 생성되기 때문"],0,
+  "단백질은 질소를 포함하고 있어서 분해되면 이산화 탄소, 물과 함께 암모니아도 함께 생성돼요."),
+OX("oxreason","암모니아는 독성이 약해 별다른 과정 없이 오줌으로 바로 배설된다.",false,
+  ["암모니아는 세뇨관에서 모두 재흡수되어 오줌으로 나가지 않기 때문","암모니아는 독성이 강해 간에서 요소로 바뀐 뒤 콩팥에서 걸러져 오줌으로 나가기 때문","암모니아는 폐에서 날숨으로만 배설되고 오줌으로는 나가지 않기 때문"],1,
+  "암모니아는 독성이 강한 물질이라서 간에서 독성이 약한 요소로 바뀐 뒤 콩팥에서 걸러져 오줌을 통해 몸 밖으로 나가요."),
+OX("oxreason","탄수화물과 지방이 세포에서 분해되면 공통으로 이산화 탄소와 물이 생성된다.",true,[],null,
+  "탄수화물과 지방이 세포에서 분해되면 공통적으로 이산화 탄소와 물이 생성돼요."),
+OX("oxreason","질소 노폐물의 독성은 요소가 암모니아보다 강하다.",false,
+  ["독성의 세기는 요산이 암모니아보다 강하기 때문","질소 노폐물은 모두 독성의 세기가 같기 때문","독성의 세기는 암모니아가 요소보다 강하기 때문"],2,
+  "질소 노폐물의 독성 세기는 암모니아 > 요소 > 요산 순서예요. 암모니아가 요소보다 독성이 강해요."),
+OX("oxreason","배설계는 간, 콩팥, 오줌관, 방광으로 구성된다.",false,
+  ["간은 배설계가 아니라 소화계에 속하는 기관이기 때문","콩팥은 배설계가 아니라 순환계에 속하는 기관이기 때문","오줌관은 배설계가 아니라 호흡계에 속하는 기관이기 때문"],0,
+  "간은 암모니아를 요소로 바꾸는 작용을 하지만 소화계에 속하는 기관이에요. 배설계는 콩팥, 오줌관, 방광, 요도로 이루어져 있어요."),
+OX("oxreason","콩팥은 가슴 속에 좌우 한 개씩 들어 있다.",false,
+  ["콩팥은 한 개가 아니라 좌우 세 개씩 있기 때문","콩팥은 가슴이 아니라 허리의 등쪽 좌우에 있기 때문","콩팥은 몸 앞쪽 배 가운데에 있기 때문"],1,
+  "콩팥은 가슴 속이 아니라 허리의 등쪽 좌우에 한 개씩 있어요."),
+OX("oxreason","네프론은 콩팥동맥, 콩팥정맥, 콩팥깔때기로 이루어져 있다.",false,
+  ["네프론은 콩팥겉질과 콩팥속질로만 이루어져 있기 때문","네프론은 오줌관과 방광, 요도로 이루어져 있기 때문","네프론은 토리, 보먼주머니, 세뇨관으로 이루어져 있기 때문"],2,
+  "오줌을 만드는 기본 단위인 네프론은 토리, 보먼주머니, 세뇨관으로 이루어져 있어요."),
+OX("oxreason","콩팥깔때기에는 네프론이 있어서 그곳에서 직접 오줌이 만들어진다.",false,
+  ["콩팥깔때기에는 네프론이 없으며 네프론에서 만들어진 오줌이 모이는 공간일 뿐이기 때문","콩팥깔때기는 오줌관과 연결되어 있지 않기 때문","콩팥깔때기는 콩팥겉질보다 바깥쪽에 위치하기 때문"],0,
+  "콩팥깔때기에는 네프론이 없어요. 네프론에서 만들어진 오줌이 모였다가 오줌관으로 이동하는 공간일 뿐이에요."),
+OX("oxreason","오줌은 토리 → 보먼주머니 → 세뇨관 → 콩팥깔때기 → 오줌관 → 방광 → 요도 순서로 이동한다.",true,[],null,
+  "오줌이 생성되어 배설되는 경로는 토리 → 보먼주머니 → 세뇨관 → 콩팥깔때기 → 오줌관 → 방광 → 요도예요."),
+OX("oxreason","여과는 세뇨관에서 모세혈관으로 크기가 작은 물질이 이동하는 과정이다.",false,
+  ["여과는 크기가 작은 물질이 아니라 크기가 큰 물질만 이동하는 과정이기 때문","여과는 세뇨관에서 모세혈관으로 이동하는 것이 아니라 토리에서 보먼주머니로 이동하는 과정이기 때문","여과는 능동수송으로 일어나는 과정이기 때문"],1,
+  "여과는 토리에서 보먼주머니로 크기가 작은 물질이 이동하는 과정이에요. 세뇨관에서 모세혈관으로 물질이 이동하는 과정은 재흡수예요."),
+OX("oxreason","혈구와 단백질은 크기가 작아서 토리에서 보먼주머니로 쉽게 여과된다.",false,
+  ["혈구와 단백질은 음전하를 띠어서 여과되지 않기 때문","혈구와 단백질은 이미 세뇨관에서 분비되었기 때문","혈구와 단백질은 크기가 커서 토리의 모세혈관 벽을 통과하지 못하기 때문"],2,
+  "혈구와 단백질은 크기가 커서 토리의 모세혈관 벽을 통과하지 못하므로 여과되지 않아요."),
+OX("oxreason","포도당은 여과된 후 세뇨관에서 전혀 재흡수되지 않아 오줌 속에 많이 들어 있다.",false,
+  ["포도당은 여과된 후 세뇨관에서 100% 재흡수되어 정상 오줌에는 들어 있지 않기 때문","포도당은 애초에 크기가 커서 여과되지 않기 때문","포도당은 콩팥이 아니라 간에서 모두 분해되어 없어지기 때문"],0,
+  "포도당은 여과된 후 세뇨관에서 100% 재흡수되기 때문에 건강한 사람의 오줌에는 포도당이 들어 있지 않아요."),
+OX("oxreason","요소는 여과액보다 오줌에서 농도가 크게 낮아진다.",false,
+  ["요소는 세뇨관에서 새로 분해되어 사라지기 때문에 농도가 낮아지는 것처럼 보이기 때문","세뇨관을 지나는 동안 물의 대부분이 재흡수되어 요소가 오히려 농축되므로 오줌에서 농도가 크게 높아지기 때문","요소는 방광에서 물에 희석되어 농도가 낮아지기 때문"],1,
+  "세뇨관을 지나는 동안 물의 대부분이 재흡수되면서 요소는 오히려 농축되어 오줌에서 농도가 여과액보다 크게 높아져요."),
+OX("oxreason","토리는 수입동맥이 수출동맥보다 굵어서 내부 혈압이 높아지고, 이 압력 차이로 여과가 일어난다.",true,[],null,
+  "토리로 들어오는 수입동맥은 굵고 나가는 수출동맥은 가늘어서 토리 내부의 혈압이 높아지고, 이 압력 차이 때문에 여과가 일어나요."),
+OX("oxreason","세포호흡은 조직 세포가 아니라 배설계에서 직접 일어난다.",false,
+  ["세포호흡은 소화계에서 음식물을 분해하는 과정이기 때문","세포호흡은 순환계를 이동하는 혈액 속에서 일어나기 때문","세포호흡은 조직 세포의 미토콘드리아에서 일어나며 배설계는 그 결과 생긴 노폐물을 걸러 내보내는 역할을 할 뿐이기 때문"],2,
+  "세포호흡은 조직 세포의 미토콘드리아에서 일어나요. 배설계는 그 결과 생긴 노폐물을 걸러 몸 밖으로 내보내는 역할을 할 뿐이에요."),
+OX("oxreason","세포호흡으로 얻은 에너지는 모두 영양소를 소화하고 흡수하는 데에만 쓰인다.",false,
+  ["세포호흡으로 얻은 에너지는 체온 유지, 근육 운동, 두뇌 활동 등 다양한 생명 활동에 쓰이며 영양소의 소화·흡수는 소화계가 담당하는 별개의 과정이기 때문","세포호흡으로 얻은 에너지는 오직 열로만 방출되고 다른 곳에는 쓰이지 않기 때문","세포호흡으로 얻은 에너지는 배설계에서 노폐물을 거르는 데만 쓰이기 때문"],0,
+  "세포호흡으로 얻은 에너지는 체온 유지, 근육 운동, 두뇌 활동 등 여러 생명 활동에 쓰여요. 영양소를 소화하고 흡수하는 것은 소화계가 담당하는 별개의 과정이에요."),
+OX("oxreason","격렬한 운동을 하면 세포호흡에 필요한 영양소와 산소를 빨리 공급하기 위해 숨이 가빠지고 심장이 빠르게 뛴다.",true,[],null,
+  "격렬한 운동을 하면 에너지가 많이 필요해 세포호흡이 활발히 일어나야 하므로, 필요한 영양소와 산소를 빨리 공급하기 위해 숨이 가빠지고 심장이 빠르게 뛰어요."),
+OX("oxreason","물은 세포 호흡으로 생성된 후 오줌으로만 몸 밖으로 배출되고 날숨으로는 나가지 않는다.",false,
+  ["물은 오줌뿐 아니라 날숨을 통해 수증기 형태로도, 땀으로도 몸 밖으로 나가기 때문","물은 세포 호흡으로 생성되지 않고 처음부터 몸에 있던 것이기 때문","물은 오줌으로도 날숨으로도 나가지 않고 몸속에 계속 저장되기 때문"],0,
+  "물은 폐에서 날숨을 통해 수증기 형태로 빠져나가거나 콩팥에서 오줌의 형태로, 또는 땀으로도 몸 밖으로 나가요."),
+OX("oxreason","이산화 탄소는 오줌을 통해 주로 몸 밖으로 나간다.",false,
+  ["이산화 탄소는 콩팥에서 완전히 분해되어 사라지기 때문","이산화 탄소는 폐에서 기체 교환을 거쳐 날숨을 통해 몸 밖으로 나가기 때문","이산화 탄소는 땀으로만 배출되고 폐와는 관련이 없기 때문"],1,
+  "이산화 탄소는 폐의 모세 혈관에서 허파꽈리로 이동한 뒤 날숨을 통해 몸 밖으로 빠져나가요. 오줌으로는 배설되지 않아요."),
+OX("oxreason","포도당이 세포호흡으로 분해되면 이산화 탄소, 물과 함께 암모니아도 생성된다.",false,
+  ["암모니아는 지방이 분해될 때만 생성되기 때문","암모니아는 세뇨관에서 분비 작용으로만 새로 만들어지기 때문","포도당은 탄수화물로 질소를 포함하지 않아 분해되어도 이산화 탄소와 물만 생기고 암모니아는 생성되지 않기 때문"],2,
+  "포도당과 같은 탄수화물이 세포 호흡으로 분해되면 이산화 탄소와 물만 생겨요. 암모니아는 질소를 포함한 단백질이 분해될 때 생성돼요."),
+OX("oxreason","세포에서 영양소가 분해될 때 물과 이산화 탄소는 공통적으로 생성된다.",true,[],null,
+  "탄수화물, 지방, 단백질이 세포에서 분해될 때에는 공통적으로 물과 이산화 탄소가 생성돼요. 단백질이 분해될 때에는 암모니아도 추가로 생성돼요."),
+OX("oxreason","배설계는 콩팥, 오줌관, 방광, 심장으로 구성된다.",false,
+  ["심장은 배설계가 아니라 혈액을 순환시키는 순환계에 속하는 기관이기 때문","콩팥은 배설계가 아니라 소화계에 속하는 기관이기 때문","오줌관은 배설계가 아니라 호흡계에 속하는 기관이기 때문"],0,
+  "배설계는 콩팥, 오줌관, 방광, 요도로 이루어져 있어요. 심장은 온몸에 혈액을 순환시키는 순환계에 속하는 기관이에요."),
+OX("oxreason","콩팥은 좌우 세 개씩 총 여섯 개가 있다.",false,
+  ["콩팥은 가슴이 아니라 허리의 등쪽에 있기 때문","콩팥은 세 개씩이 아니라 좌우에 한 개씩, 총 두 개가 있기 때문","콩팥은 좌우 구분 없이 몸 가운데에 한 개만 있기 때문"],1,
+  "콩팥은 세 개씩이 아니라, 허리의 등쪽 좌우에 한 개씩 총 두 개가 있어요."),
+OX("oxreason","콩팥겉질에는 세뇨관이 있고 콩팥속질에는 토리와 보먼주머니가 있다.",false,
+  ["콩팥겉질과 콩팥속질은 하는 일이 완전히 같아서 위치를 구분할 필요가 없기 때문","세뇨관은 콩팥속질이 아니라 콩팥깔때기에만 있기 때문","실제로는 반대로 토리와 보먼주머니는 콩팥겉질에 있고 세뇨관은 콩팥속질에 있기 때문"],2,
+  "콩팥겉질에는 토리와 보먼주머니가 있고, 콩팥속질에는 세뇨관이 있어요. 문장은 이를 반대로 설명하고 있어요."),
+OX("oxreason","방광은 오줌관을 통해 이동해 온 오줌을 요도로 내보내기 전까지 잠시 저장하는 기관이다.",true,[],null,
+  "콩팥에서 만들어진 오줌은 오줌관을 지나 방광에 잠시 저장되었다가 요도를 통해 몸 밖으로 나가요."),
+OX("oxreason","혈액은 콩팥정맥을 통해 콩팥 안으로 들어와 토리에서 여과된다.",false,
+  ["혈액은 콩팥정맥이 아니라 콩팥동맥을 통해 콩팥 안으로 들어오기 때문","여과는 정맥이 아니라 오줌관에서 일어나는 과정이기 때문","콩팥정맥은 오줌을 모아 방광으로 보내는 혈관이기 때문"],0,
+  "심장에서 나온 혈액은 콩팥동맥을 통해 콩팥으로 들어와 토리를 지나면서 보먼주머니로 여과돼요. 콩팥정맥은 걸러진 혈액이 콩팥을 빠져나가는 혈관이에요."),
+OX("oxreason","여과는 에너지를 사용하는 능동수송 과정이다.",false,
+  ["여과는 세뇨관에서 일어나는 과정이기 때문","여과는 토리의 높은 혈압 때문에 일어나는 물리적인 과정으로 별도의 에너지를 사용하지 않기 때문","여과는 콩팥깔때기에서 일어나는 과정이기 때문"],1,
+  "여과는 토리의 높은 혈압 차이에 의해 물질이 밀려나가는 물리적인 과정으로, 별도의 에너지를 사용하지 않아요."),
+OX("oxreason","아미노산은 여과된 후 세뇨관에서 재흡수되지 않아 오줌에 많이 섞여 나온다.",false,
+  ["아미노산은 애초에 크기가 커서 토리에서 여과되지 않기 때문","아미노산은 콩팥이 아니라 간에서 모두 걸러지기 때문","아미노산은 포도당처럼 몸에 필요한 물질이므로 세뇨관에서 모세혈관으로 대부분 재흡수되어 정상 오줌에는 거의 들어 있지 않기 때문"],2,
+  "아미노산은 포도당처럼 몸에 필요한 영양소이므로 여과된 후 세뇨관에서 모세혈관으로 재흡수되어 정상적인 오줌에는 거의 들어 있지 않아요."),
+OX("oxreason","분비는 세뇨관에 있던 노폐물이 모세혈관으로 이동하는 과정이다.",false,
+  ["분비는 반대로 미처 여과되지 못하고 혈액에 남아 있던 노폐물이 모세혈관에서 세뇨관으로 이동하는 과정이기 때문","분비는 토리에서 보먼주머니로 물질이 이동하는 과정이기 때문","분비는 오줌관에서 방광으로 오줌이 이동하는 과정이기 때문"],0,
+  "분비는 여과되지 않고 혈액(모세혈관)에 남아 있던 노폐물의 일부가 세뇨관으로 이동하는 과정이에요."),
+OX("oxreason","요소는 포도당처럼 여과된 후 세뇨관에서 모두 재흡수되어 오줌에는 들어 있지 않다.",false,
+  ["요소는 애초에 크기가 커서 토리에서 여과되지 않기 때문","요소는 노폐물이라 재흡수되지 않고 분비 과정도 거쳐 오히려 오줌에서 농도가 더 높아지기 때문","요소는 세뇨관이 아니라 토리에서 모두 분해되어 사라지기 때문"],1,
+  "요소는 몸에 필요 없는 노폐물이므로 세뇨관에서 재흡수되지 않고 분비 과정도 거치면서 오줌에서 농도가 여과액보다 오히려 높아져요."),
+OX("oxreason","무기염류는 여과된 후 필요한 양만큼 세뇨관에서 재흡수되고 나머지는 오줌으로도 배설된다.",true,[],null,
+  "무기염류는 여과된 후 몸에 필요한 만큼만 세뇨관에서 재흡수되고, 남은 양은 오줌을 통해 배설돼요."),
+OX("oxreason","세포 호흡으로 생긴 이산화 탄소와 노폐물은 순환계를 거치지 않고 조직 세포에서 곧바로 호흡계와 배설계로 전달된다.",false,
+  ["조직 세포는 호흡계와 직접 연결되어 있어 물질을 바로 주고받기 때문","이산화 탄소와 노폐물은 배설계에서 먼저 걸러진 뒤 순환계로 전달되기 때문","조직 세포에서 생긴 이산화 탄소와 노폐물은 순환계를 통해 운반되어 각각 호흡계와 배설계로 전달되기 때문"],2,
+  "조직 세포에서 생긴 이산화 탄소와 노폐물은 순환계를 통해 운반되어 각각 호흡계와 배설계로 전달돼요."),
+OX("oxreason","소화계에서 흡수된 영양소는 배설계를 통해 온몸의 조직 세포로 운반된다.",false,
+  ["영양소는 배설계가 아니라 순환계를 통해 온몸의 조직 세포로 운반되기 때문","영양소는 소화계에서 흡수된 뒤 별도의 운반 과정 없이 저절로 퍼지기 때문","영양소는 호흡계를 통해서만 조직 세포로 운반되기 때문"],0,
+  "소화계에서 흡수된 영양소는 순환계를 통해 온몸의 조직 세포로 운반돼요. 배설계는 노폐물을 걸러 내보내는 역할을 해요."),
+OX("oxreason","세포 호흡이 원활히 일어나려면 영양소를 흡수하는 소화계, 산소를 흡수하는 호흡계, 이들을 운반하는 순환계, 노폐물을 내보내는 배설계가 조화롭게 작용해야 한다.",true,[],null,
+  "세포 호흡이 잘 일어나려면 영양소를 소화·흡수하는 소화계, 산소를 흡수하는 호흡계, 이들을 운반하는 순환계, 노폐물을 배설하는 배설계가 서로 조화롭게 작용해야 해요."),
 ];
 
 /* ============ APP CONFIG ============ */
@@ -301,7 +399,7 @@ async function getStudentPassword(){ const c=await getLoginConfig(); return c.pa
 function newSession(){
   return {name:localStorage.getItem('lastname_'+APP_KEY)||'',cats:[],order:'seq',mode:'full',wrongScope:'all',randomCount:0,
     list:[],idx:0,correct:0,answers:{},wrong:[],combo:0,maxCombo:0,
-    setSize:20,setIdx:0,selected:null,submitted:false,giveUp:false,
+    setSize:20,setIdx:0,selected:null,submitted:false,giveUp:false,ox2Stage:1,
     lockUntil:0,lockTimerId:null,gsSessionId:null,timeLeft:60,timerId:null};
 }
 let state=newSession();
@@ -504,7 +602,7 @@ function renderLogin(){
   <div class="hero">
     <div class="eyebrow">중2과학 6-4단원 배설</div>
     <h1>배설</h1>
-    <p>노폐물부터 콩팥 구조까지, 100제로 완전정복! ${QUESTIONS.length}제로 완전정복!</p>
+    <p>노폐물부터 콩팥 구조까지, OX 함정문장까지! ${QUESTIONS.length}제로 완전정복!</p>
   </div>
   <div class="card">
     <label class="field-label">🙋 이름(아이디)을 입력해줘</label>
@@ -564,7 +662,7 @@ function renderSetup(){
   <div class="hero">
     <div class="eyebrow">중2과학 6-4단원 배설</div>
     <h1>배설</h1>
-    <p>노폐물부터 콩팥 구조까지, 100제로 완전정복! ${QUESTIONS.length}제로 완전정복!</p>
+    <p>노폐물부터 콩팥 구조까지, OX 함정문장까지! ${QUESTIONS.length}제로 완전정복!</p>
   </div>
   <div class="card">
     <label class="field-label">👋 ${state.name}님, 반가워요!</label>
@@ -729,7 +827,7 @@ function beginList(list){
   clearResumeSnapshot(state.name);
   state.list=list;
   state.idx=0;state.correct=0;state.wrong=[];state.answers={};
-  state.setIdx=0;state.selected=null;state.submitted=false;state.giveUp=false;
+  state.setIdx=0;state.selected=null;state.submitted=false;state.giveUp=false;state.ox2Stage=1;
   state.gsSessionId=uid();
   screen='quiz';
   render();
@@ -739,6 +837,37 @@ function beginList(list){
 /* ============ QUIZ SCREEN ============ */
 function currentQ(){return state.list[state.idx];}
 
+function renderOX2UI(q,isLocked){
+  if(state.ox2Stage===2){
+    return q.reasons.map((r,i)=>{
+      let cls='choice';
+      if(state.submitted){
+        if(i===q.ra) cls+=' correct';
+        else if(i===state.selected) cls+=' wrong';
+      } else if(isLocked){
+        cls+=' locked';
+      } else if(state.selected===i){
+        cls+=' sel';
+      }
+      return `<div class="${cls}" data-idx="${i}">${['①','②','③'][i]} ${r}</div>`;
+    }).join('');
+  }
+  const labels=['⭕ 맞는 문장이에요','❌ 틀린 문장이에요'];
+  const correctIdx=q.isTrue?0:1;
+  return labels.map((label,i)=>{
+    let cls='choice';
+    if(state.submitted){
+      if(i===correctIdx) cls+=' correct';
+      else if(i===state.selected) cls+=' wrong';
+    } else if(isLocked){
+      cls+=' locked';
+    } else if(state.selected===i){
+      cls+=' sel';
+    }
+    return `<div class="${cls}" data-idx="${i}">${label}</div>`;
+  }).join('');
+}
+
 function renderQuiz(){
   const q=currentQ();
   if(!q) return renderResult();
@@ -746,7 +875,8 @@ function renderQuiz(){
   const timePct=Math.max(0,state.timeLeft/60*100);
   const submittedInfo=state.submitted?state.lastResult:null;
   const isLocked=state.mode==='deep' && !state.submitted && Date.now()<state.lockUntil;
-  const choicesHtml=q.o.map((opt,i)=>{
+  const isOX2=q.t==='ox2';
+  const choicesHtml=isOX2 ? renderOX2UI(q,isLocked) : q.o.map((opt,i)=>{
     let cls='choice';
     if(state.submitted){
       if(i===q.a) cls+=' correct';
@@ -763,6 +893,9 @@ function renderQuiz(){
     const ok=submittedInfo.ok;
     feedback=`<div class="explain-box ${ok?'right':''}"><b>${ok?'정답이에요! 🎉':'아쉬워요! 다시 확인해볼까요?'}</b>${q.e}</div>`;
   }
+  const ox2StageTag=isOX2 ? (state.ox2Stage===2
+      ? `<div class="tag" style="background:#fdeceb;color:#c0392b;">2단계 · 이 문장이 틀린 진짜 이유는?</div>`
+      : `<div class="tag">1단계 · 이 문장, 맞을까요 틀릴까요?</div>`) : '';
   return `
   <div class="card">
     <div class="tag">${catName(q.c)}</div>
@@ -773,6 +906,7 @@ function renderQuiz(){
     ${(state.combo||0)>=2?`<div class="combo-badge">🔥 ${state.combo}연속 정답!</div>`:''}
     <div class="qtext">Q${state.idx+1}. ${q.q}</div>
     ${q.img && IMG[q.img] ? `<img class="qimg" src="${IMG[q.img]}" alt="참고 그림">` : ''}
+    ${ox2StageTag}
     <div id="choicesWrap">${choicesHtml}</div>
     ${feedback}
     ${state.submitted?
@@ -828,9 +962,47 @@ function autoSubmitTimeout(){ if(!state.submitted){handleSubmit(true);} }
 function handleSubmit(timeout){
   clearInterval(state.timerId);
   const q=currentQ();
+  if(q.t==='ox2' && state.ox2Stage===1 && !(timeout && state.selected==null)){
+    const pick=state.selected===0?'O':'X';
+    if(!q.isTrue && pick==='X'){
+      state.ox2Stage=2; state.selected=null;
+      render();
+      return;
+    }
+  }
   let ok=false;
-  if(timeout && state.selected==null){ ok=false; }
-  else { ok=state.selected===q.a; }
+  let yourAnswerText='(제출 안함)';
+  let correctAnswerText;
+  if(q.t==='ox2'){
+    const correctFirstText = q.isTrue ? '⭕ 맞는 문장' : ('❌ 틀린 문장 · '+q.reasons[q.ra]);
+    if(state.ox2Stage===1){
+      if(timeout && state.selected==null){
+        ok=false; yourAnswerText='(제출 안함)';
+      } else {
+        const pick=state.selected===0?'O':'X';
+        if(q.isTrue){
+          ok = pick==='O';
+          yourAnswerText = pick==='O' ? '⭕ 맞는 문장' : '❌ 틀린 문장';
+        } else {
+          ok=false;
+          yourAnswerText='⭕ 맞는 문장';
+        }
+      }
+      correctAnswerText = correctFirstText;
+    } else {
+      if(timeout && state.selected==null){
+        ok=false; yourAnswerText='(이유 선택 안함)';
+      } else {
+        ok = state.selected===q.ra;
+        yourAnswerText = state.selected!=null ? ('❌ 틀린 문장 · '+q.reasons[state.selected]) : '(이유 선택 안함)';
+      }
+      correctAnswerText = correctFirstText;
+    }
+  } else {
+    if(timeout && state.selected==null){ ok=false; yourAnswerText='(제출 안함)'; }
+    else { ok=state.selected===q.a; yourAnswerText=state.selected!=null?q.o[state.selected]:'(제출 안함)'; }
+    correctAnswerText=q.o[q.a];
+  }
   state.submitted=true;
   state.lastResult={ok};
   state.answers[q._id]=ok;
@@ -842,7 +1014,7 @@ function handleSubmit(timeout){
   else {
     state.combo=0;
     state.wrong=state.wrong.filter(w=>w.id!==q._id);
-    state.wrong.push({id:q._id,q:q.q,your:state.selected!=null?q.o[state.selected]:'(제출 안함)',correct:q.o[q.a],explain:q.e,cat:q.c});
+    state.wrong.push({id:q._id,q:q.q,your:yourAnswerText,correct:correctAnswerText,explain:q.e,cat:q.c});
   }
   render();
   saveResumeSnapshot();
@@ -850,7 +1022,7 @@ function handleSubmit(timeout){
 
 function goNext(){
   state.idx++;
-  state.selected=null;state.submitted=false;
+  state.selected=null;state.submitted=false;state.ox2Stage=1;
   if(state.idx>=state.list.length){ finishQuiz(); return; }
   if(state.mode==='focus' && state.idx>0 && state.idx%state.setSize===0){
     screen='setresult';render();return;
